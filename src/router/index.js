@@ -1,23 +1,49 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import QnABoard from '@/components/qna/QnABoard.vue'  
+import QuestionWrite from '@/components/qna/QuestionWrite.vue'  
+import QuestionDetail from '@/components/qna/QuestionDetail.vue' 
+import FoodDetail from '@/components/food/FoodDetail.vue'
+import FoodList from '@/components/food/FoodList.vue'
+import FoodMain from '@/components/food/FoodMain.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  ///// qna /////
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/qnaboard',
+    name: 'qnaboard',
+    component: QnABoard
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/questionwrite',
+    name: 'questionwrite',
+    component: QuestionWrite
+  },
+  {
+    path: '/questiondetail/:boardId',
+    name: 'questiondetail',
+    component: QuestionDetail,
+    props: true
+  },
+
+  ///// food /////
+  {
+    path: '/fooddetail',
+    name: 'fooddetail',
+    component: FoodDetail
+  },
+  {
+    path: '/foodlist',
+    name: 'foodlist',
+    component: FoodList
+  },
+  {
+    path: '/',
+    name: 'foodmain',
+    component: FoodMain
+  },
 ]
 
 const router = new VueRouter({
