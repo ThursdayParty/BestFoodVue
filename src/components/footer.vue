@@ -12,8 +12,6 @@ export default {
 
 <style scoped>
 #footer {
-	width: 60%;
-	background-color:#eee;
 	margin: auto;
 	padding: 40px;
 	align-self: center;

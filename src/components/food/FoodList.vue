@@ -1,38 +1,64 @@
 <template>
     <div id="foodlist">
-        <!-- <div class="food-wrapper" v-for="food in foods" :key="food.code">
+        
+        <ImageSlider></ImageSlider>
+
+        <div class="food-wrapper" v-for="food in foods" :key="food.foodId">
             <div class="food-img">
-                <img :src="food.food_img"
+                <img :src="food.imageUrl"
                      style="height: 150px; display: block; margin: 20px auto;" />
             </div>
 
             <div class="food-body">
-                <a href="food.do?code=<c:out value="${food.code}"></c:out>">
+                <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
                     <h1 style="font-family: Jua, sans-serif; display: inline-block;">
-                        <c:out value="${food.name}"></c:out>
+                        {{food.name}}
                     </h1> 
                     <span>-</span>
                     <h5 style="font-family: Jua, sans-serif;display: inline-block;">
-                        <c:out value="${food.maker}"></c:out>
+                        {{food.maker}}
                     </h5> 
                     <div>
-                        <c:out value="${food.material}"></c:out>
+                        {{food.materials}}
                     </div>
-                </a>
+                </router-link>
             </div>
-        </div>  -->
+        </div> 
     </div>
 </template>
 
 <script>
-// import http from "../../http-common";
+import http from "../../http-common";
+import ImageSlider from '../ImageSlider'
 export default {
     name: 'foodlist',
+    components: {
+        ImageSlider
+    },
+    data() {
+        return {
+            foods: {}
+        }
+    },
+    mounted() {
+        this.selectAllFood()
+    },
+    methods: {
+        selectAllFood() {
+            http.get("/foods")
+                .then(res => this.foods = res.data)
+        },
+    },
+    // filters: {
+    //     materialFormat: function(materials) {
+    //         return materials.substr(0,10);
+    //     }
+    // }
 }
 </script>
 
 <style scoped>
-/* .food-wrapper {
+.food-wrapper {
 	display: flex;
 	background-color: #fff;
 	margin: 20px 0;
@@ -46,5 +72,5 @@ export default {
 
 .food-wrapper>.food-body {
 	flex: 5 5 0;
-} */
+}
 </style>

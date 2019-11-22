@@ -7,7 +7,8 @@
       <router-link to="/">MAIN</router-link> | 
       <router-link to="/qnaboard">QnA게시판</router-link> |
       <router-link to="/foodlist">상품정보</router-link> |
-    </div>
+      <router-link to="/takefood">섭취한 식품</router-link> |
+    </div>   
 
     <router-view/>
 
@@ -18,8 +19,8 @@
 </template>
 
 <script>
-import Header from './components/header'
-import Footer from './components/footer'
+import Header from './components/Header'
+import Footer from './components/Footer'
 export default {
   components: {
     Header,
