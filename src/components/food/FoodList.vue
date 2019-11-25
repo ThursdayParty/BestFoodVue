@@ -9,6 +9,8 @@
                      style="height: 150px; display: block; margin: 20px auto;" />
             </div>
 
+            <button @click="addTakenFood(food.foodId)"></button>
+
             <div class="food-body">
                 <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
                     <h1 style="font-family: Jua, sans-serif; display: inline-block;">
@@ -48,12 +50,11 @@ export default {
             http.get("/foods")
                 .then(res => this.foods = res.data)
         },
+        addTakenFood(foodId) {
+            http.post("/taken", foodId)
+                .then(() => alert('섭취 완료'))
+        }
     },
-    // filters: {
-    //     materialFormat: function(materials) {
-    //         return materials.substr(0,10);
-    //     }
-    // }
 }
 </script>
 

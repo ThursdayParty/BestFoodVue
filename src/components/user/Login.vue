@@ -1,12 +1,36 @@
 <template>
-  <div>
-    <h2>Login</h2>
+  <div id='login'>
+
+  <b-card class='logincard' bg-variant="light">
     <form @submit.prevent="onSubmit(email, password)">
-      <input type="text" v-model="email" placeholder="Email Address">
-      <input type="password" v-model="password" placeholder="Password">
-      <input type="submit" value="Login">
+        <b-form-group
+          label-cols-sm="3"
+          label="Id :"
+          label-size="sm"
+          label-align-sm="right"
+          label-for="nested-id"
+        >
+          <b-form-input id="nested-id" size="sm" v-model="email" ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          label-cols-sm="3"
+          label="Password :"
+          label-size="sm"
+          label-align-sm="right"
+          label-for="nested-password"
+        >
+          <b-form-input type='password' id="nested-password" size="sm" v-model="password"></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" pill variant="info">로그인</b-button>
     </form>
+  </b-card>
+
     <p><i>{{msg}}</i></p>
+
+
+
   </div>
 </template>
 
@@ -43,3 +67,15 @@
     }
   }
 </script>
+
+<style scoped>
+#login {
+  width: 100%;
+  text-align: center;
+  padding: 20px
+}
+.logincard {
+  display: inline-block;
+  width: 50%;
+}
+</style>

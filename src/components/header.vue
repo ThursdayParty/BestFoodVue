@@ -2,8 +2,8 @@
     <div id="header">
         <b-container class='bv-example-row fluid'>
             <b-row>
-                <b-col cols="8"><h1>SAFEFOOD</h1></b-col>
-                <b-col cols="4">
+                <b-col cols="8" align='left'><h1>SAFEFOOD</h1></b-col>
+                <b-col cols="4" align='right'>
                     <!-- 로그인 후 -->
                     <div v-if="isAuthenticated">
                         {{userId}}님 |

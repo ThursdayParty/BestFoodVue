@@ -19,7 +19,6 @@ Vue.use(VueRouter)
 
 const requireAuth = () => (to, from, next) => {
   if (store.getters.isAuthenticated) return next()
-  alert(to.path)
   next(`/login?returnPath=${encodeURIComponent(to.path)}`)
 }
 

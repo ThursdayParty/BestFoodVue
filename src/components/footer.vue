@@ -1,6 +1,6 @@
 <template>
     <div id="footer">
-        <b-badge variant="dark">Developer</b-badge> 황준오 최지원
+        <b-badge variant="danger">Developer</b-badge><a> 황준오 최지원</a>
     </div>
 </template>
 
@@ -9,3 +9,9 @@ export default {
     name: "footer"
 }
 </script>
+
+<style scoped>
+a {
+    font-family: 'Jua'
+}
+</style>

@@ -15,19 +15,19 @@
     >
       <!-- Text slides with image -->
       <b-carousel-slide
-        caption="First slide"
+        caption="Best Safe Food"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
         img-src="https://picsum.photos/720/240/?image=292"
       ></b-carousel-slide>
 
       <b-carousel-slide
-        caption="second slide"
+        caption="Best Safe Food"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
         img-src="https://picsum.photos/720/240/?image=326"
       ></b-carousel-slide>
 
       <b-carousel-slide
-        caption="Third slide"
+        caption="Best Safe Food"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
         img-src="https://picsum.photos/720/240/?image=429"
       ></b-carousel-slide>
