@@ -1,55 +1,56 @@
 <template>
-    <div id="imageslider">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
+  <div>
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="4000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+      img-height="480"
+      style="text-shadow: 1px 1px 2px #333;"
+      @sliding-start="onSlideStart"
+      @sliding-end="onSlideEnd"
+    >
+      <!-- Text slides with image -->
+      <b-carousel-slide
+        caption="First slide"
+        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+        img-src="https://picsum.photos/720/240/?image=292"
+      ></b-carousel-slide>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <div class="item active" style="height:300px;">
-                    <img src="../assets/1.jpg" alt="Chania" style="width:100%; overflow: hidden;">
-                    <div class="carousel-caption">
-                        <h2>PERFECT SAFEFOOD</h2>
-                        <p>LA is always so much fun!</p>
-                    </div>
-                </div>
+      <b-carousel-slide
+        caption="second slide"
+        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+        img-src="https://picsum.photos/720/240/?image=326"
+      ></b-carousel-slide>
 
-                <div class="item" style="height:300px;">
-                    <img src="../assets/2.jpg" alt="Chania" style="width:100%; overflow: hidden;">
-                    <div class="carousel-caption">
-                        <h2>PERFECT SAFEFOOD</h2>
-                        <p>Thank you, Chicago!</p>
-                    </div>
-                </div>
-
-                <div class="item" style="height:300px;">
-                    <img src="../assets/2.jpg" alt="Chania" style="width:100%; overflow: hidden;">
-                    <div class="carousel-caption">
-                        <h2>PERFECT SAFEFOOD</h2>
-                        <p>We love the Big Apple!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
+      <b-carousel-slide
+        caption="Third slide"
+        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+        img-src="https://picsum.photos/720/240/?image=429"
+      ></b-carousel-slide>
+    </b-carousel>
+  </div>
 </template>
 
 <script>
-export default {
-    name: "imageslider"
-}
+  export default {
+    data() {
+      return {
+        slide: 0,
+        sliding: null
+      }
+    },
+    methods: {
+      onSlideStart() {
+        this.sliding = true
+      },
+      onSlideEnd() {
+        this.sliding = false
+      }
+    }
+  }
 </script>
+

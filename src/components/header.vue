@@ -1,52 +1,56 @@
 <template>
     <div id="header">
-        <router-link to="/">SAFEFOOD</router-link> | 
-        <router-link to="/login">Login</router-link>
-
-        <div>
-            {{greeting}}
-        </div>
-
-
-        <!-- <c:choose>
-            <c:when test="${empty sessionScope.userid }">
-                <div class="col-md-3 col-md-offset-5" id="statuslogout111">
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalLoginForm">Log In</a> 
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalRegisterForm">Sign Up</a>
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#findpass">비밀번호 찾기</a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div class="col-md-3 col-md-offset-5" id="statuslogin111">
-                    ${sessionScope.userid.id }님 반갑습니다.
-                    
-                    <form action="logout.do" method="post" id="logoutForm"></form>
-                    <a class="btn btn-primary" id="logOut" onclick="document.getElementById('logoutForm').submit();">Log Out</a> 
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalInformationForm">Info</a> 
-                    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#modifyForm">회원정보 수정</a>
-                </div>
-            </c:otherwise>
-        </c:choose> -->
+        <b-container class='bv-example-row fluid'>
+            <b-row>
+                <b-col cols="8"><h1>SAFEFOOD</h1></b-col>
+                <b-col cols="4">
+                    <!-- 로그인 후 -->
+                    <div v-if="isAuthenticated">
+                        {{userId}}님 |
+                        <a href="" @click.prevent="onClickLogout">로그아웃</a> | 
+                        <router-link to='/updateUserInfo'>회원정보수정</router-link>
+                    </div>
+                    <!-- 로그인 전 -->
+                    <div v-else>
+                        <router-link to="/login">로그인</router-link> | 
+                        <router-link to="/signup">회원가입</router-link>
+                    </div>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
 <script>
-/*
-    사용자의 아이디를 띄울지 말지를
-    mounted할때 api에 연결해서 인증했는지 안했는지 체크한다
-    인증했는지 안했는지 여부는 토큰을 가지고 있는지 아닌지 맞는지 아닌지
-*/
 // import http from "../http-common";
+import store from '../store'
 export default {
     name: "header",
     data() {
         return {
-            greeting: ""
+            userId: ""
         }
     },
-    /* mounted() {
-        http.get("/greeting")
-            .then(res => this.greeting = res.data.greeting)
-    }, */
+    // created() {
+    //     http.get('/home')
+    //         .then(result => this.userId = result.data.userId)
+    // },
+    computed: {
+      isAuthenticated() {
+        return store.getters.isAuthenticated
+      }
+    },
+    methods: {
+      onClickLogout() {
+        store.dispatch('LOGOUT')
+            .then(() => this.$router.push('/'))
+      }
+    }
 }
 </script>
+
+<style scoped>
+#header {
+    font-family: 'Jua';
+}
+</style>

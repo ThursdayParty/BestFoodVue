@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 import QnABoard from '@/components/qna/QnABoard.vue'  
 import QuestionWrite from '@/components/qna/QuestionWrite.vue'  
@@ -11,8 +12,17 @@ import FoodMain from '@/components/food/FoodMain.vue'
 import TakeFood from '@/components/food/TakeFood.vue'
 
 import Login from '@/components/user/Login.vue'
+import Signup from '@/components/user/Signup.vue'
+import UpdateUserInfo from '@/components/user/UpdateUserInfo.vue'
 
 Vue.use(VueRouter)
+
+const requireAuth = () => (to, from, next) => {
+  if (store.getters.isAuthenticated) return next()
+  alert(to.path)
+  next(`/login?returnPath=${encodeURIComponent(to.path)}`)
+}
+
 
 const routes = [
   ///// qna /////
@@ -54,7 +64,7 @@ const routes = [
     path: '/takefood',
     name: 'takefood',
     component: TakeFood,
-    // beforeEnter: requireAuth()
+    beforeEnter: requireAuth()
   },
 
   ///// user /////
@@ -62,6 +72,16 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: Signup
+  },
+  {
+    path: '/updateUserInfo',
+    name: 'updateUserInfo',
+    component: UpdateUserInfo
   },
 ]
 
@@ -72,9 +92,3 @@ const router = new VueRouter({
 })
 
 export default router
-
-/* const requireAuth = () => (from, to, next) => {
-  const isAuthenticated = false
-  if(isAuthenticated) return next()
-  next('/login?returnPath=takefood')
-} */

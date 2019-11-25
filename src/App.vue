@@ -3,12 +3,7 @@
 
     <Header></Header>
 
-    <div id="nav">
-      <router-link to="/">MAIN</router-link> | 
-      <router-link to="/qnaboard">QnA게시판</router-link> |
-      <router-link to="/foodlist">상품정보</router-link> |
-      <router-link to="/takefood">섭취한 식품</router-link> |
-    </div>   
+    <Menu></Menu>
 
     <router-view/>
 
@@ -20,10 +15,12 @@
 
 <script>
 import Header from './components/Header'
+import Menu from './components/Menu'
 import Footer from './components/Footer'
 export default {
   components: {
     Header,
+    Menu,
     Footer
   }
 }
@@ -31,12 +28,11 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Do+Hyeon|Jua|Nanum+Gothic&display=swap");
-@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css");
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;  
   text-align: center;
   color: #2c3e50;
 }
