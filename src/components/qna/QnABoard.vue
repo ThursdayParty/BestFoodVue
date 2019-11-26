@@ -1,7 +1,6 @@
 <template>
     <div class="qnaboard">        
-        <router-link to="/questionwrite">글쓰기</router-link> 
-
+        <b-button variant="secondary" @click="questionwrite">글쓰기</b-button>
         <table class="list_table">
             <tr>
                 <th>번호</th>
@@ -42,6 +41,9 @@ export default {
             http.get("/qnaBoards")
                 .then(res => this.questions = res.data)
         },
+        questionwrite() {
+            this.$router.push('/questionwrite')
+        }
     },
     filters: {
         dateFormat: function(date) {
@@ -50,3 +52,7 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+</style>

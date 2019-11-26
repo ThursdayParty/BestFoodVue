@@ -6,9 +6,9 @@
       :interval="4000"
       controls
       indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
+      background="#F0F2E7"
+      img-width="720"
+      img-height="240"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
@@ -53,4 +53,11 @@
     }
   }
 </script>
+
+<style scoped>
+#carousel-1 {
+  font-family: 'Jua';
+  font-weight: normal;
+}
+</style>
 

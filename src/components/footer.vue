@@ -1,6 +1,6 @@
 <template>
     <div id="footer">
-        <b-badge variant="danger">Developer</b-badge><a> 황준오 최지원</a>
+        <b-badge variant="danger">Developer</b-badge><a> 최지원 황준오</a>
     </div>
 </template>
 

@@ -1,42 +1,33 @@
 <template>
     <div id="fooddetail">
 
-        <div class="container-fluid" style="background-color: #fff; margin: 20px 0; border-radius: 12px; font-size: 1.3em; font-family: Jua, sans-serif;">
-            <div class="col-xs-2 col-xs-offset-2">
-                <img :src="food.imageUrl" style="height: 300px; display: block; margin: 20px auto;" />
+        <div class="food-wrapper">
+            <div class="food-img">
+                <img src="../../assets/logo.png">
             </div>
-            <div class="col-xs-5 col-xs-offset-1">
-                <div class="col-xs-12" style="border-top: 1px solid #eee; height: 1px; margin: 7px 0"></div>
-                <div class="col-xs-2">제품명</div>
-                <div class="col-xs-10" style="font-family: Jua, sans-serif;">
-                    {{food.name}}                
-                    <!-- <c:if test="${!empty userid}">
-                        <button onclick="takeFood()">섭취</button>
-                    </c:if> -->
-                </div>
-                <div class="col-xs-12" style="border-top: 1px solid #eee; height: 1px; margin: 7px 0"></div>
-                <div class="col-xs-2">제조사</div>
-                <div class="col-xs-10" style="font-family: Jua, sans-serif;">
-                    {{food.maker}}
-                </div>
-
-                <div class="col-xs-12" style="border-top: 1px solid #eee; height: 1px; margin: 7px 0"></div>
-                <div class="col-xs-2">원재료</div>
-                <div class="col-xs-10">
-                    {{food.materials}}
-                </div>
-
-                <div class="col-xs-12" style="border-top: 1px solid #eee; height: 1px; margin: 7px 0"></div>
-                <div class="col-xs-2">조회수</div>
-                <div class="col-xs-10">
-                    {{food.views}}
-                </div>
-                <div class="col-xs-12"
-                    style="border-top: 1px solid #eee; height: 1px; margin: 7px 0"></div>
-                <div class="col-xs-2">알레르기 성분</div>
-                <div class="col-xs-10">
-                    {{alergies}}
-                </div>
+            <div class="food-info">
+                <table>
+                    <tr>
+                        <th>제품명</th>
+                        <td>{{food.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>제조사</th>
+                        <td>{{food.maker}}</td>
+                    </tr>
+                    <tr>
+                        <th>원재료</th>
+                        <td>{{food.materials}}</td>
+                    </tr>
+                    <tr>
+                        <th>조회수</th>
+                        <td>{{food.views}}</td>
+                    </tr>
+                    <tr>
+                        <th>알레르기 성분</th>
+                        <td>{{alergies}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
 
@@ -85,13 +76,17 @@ export default {
                     backgroundColor: [ "#2ecc71", "#3498db", "#95a5a6", "#9b59b6",
                             "#f1c40f", "#e74c3c", "#34495e", '#00968896' ],
                     data: [
-                        this.food.carbohydrate, this.food.protein,
-                        this.food.fat, this.food.sugars, this.food.salt, this.food.cholesterol,
+                        this.food.carbohydrate, this.food.protein, this.food.fat, 
+                        this.food.sugars, this.food.salt, this.food.cholesterol,
                         this.food.saturatedFattyAcid, this.food.transFat
                     ],
                 }],
             }
-      },
+        },
     },
 }
 </script>
+
+<style scoped>
+/* @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'); */
+</style>

@@ -3,29 +3,39 @@
         
         <ImageSlider></ImageSlider>
 
+        <b-container class='bv-example-row fluid'>
+            <b-row>
+                <b-col cols="8" align='left'>검색</b-col>
+                <b-col cols="4" align='right'>정렬</b-col>
+            </b-row>
+        </b-container>
+        
         <div class="food-wrapper" v-for="food in foods" :key="food.foodId">
-            <div class="food-img">
-                <img :src="food.imageUrl"
+            <div class="food-header">
+                <div class="food-img">
+                    <img :src="food.imageUrl"
                      style="height: 150px; display: block; margin: 20px auto;" />
+                </div>
+                <div class="food-btns">
+                    <b-button pill variant="danger" size="sm" style="margin-right: 5px">추천</b-button>
+                    <b-button pill variant="warning" size="sm" @click="addTakenFood(food.foodId)">섭취</b-button>                  
+                </div>
             </div>
-
-            <button @click="addTakenFood(food.foodId)"></button>
-
             <div class="food-body">
                 <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
-                    <h1 style="font-family: Jua, sans-serif; display: inline-block;">
+                    <h3 style="font-family: Jua, sans-serif; display: inline-block;">
                         {{food.name}}
-                    </h1> 
-                    <span>-</span>
+                    </h3> 
+                    <span> - </span>
                     <h5 style="font-family: Jua, sans-serif;display: inline-block;">
                         {{food.maker}}
-                    </h5> 
+                    </h5>
                     <div>
                         {{food.materials}}
                     </div>
                 </router-link>
             </div>
-        </div> 
+        </div>
     </div>
 </template>
 
@@ -39,7 +49,7 @@ export default {
     },
     data() {
         return {
-            foods: {}
+            foods: []
         }
     },
     mounted() {
@@ -51,8 +61,8 @@ export default {
                 .then(res => this.foods = res.data)
         },
         addTakenFood(foodId) {
-            http.post("/taken", foodId)
-                .then(() => alert('섭취 완료'))
+            http.post("/taken", {foodId})
+                .then(() => alert('섭취하였습니다!'))
         }
     },
 }
@@ -61,9 +71,9 @@ export default {
 <style scoped>
 .food-wrapper {
 	display: flex;
-	background-color: #fff;
 	margin: 20px 0;
 	border-radius: 12px;
+    padding: 10px;
 }
 
 .food-wrapper>.food-img {
@@ -71,7 +81,12 @@ export default {
 	margin: 0 20px;
 }
 
+.food-wrapper>.food-btns {
+    margin: 0 20px;
+}
+
 .food-wrapper>.food-body {
 	flex: 5 5 0;
 }
+
 </style>

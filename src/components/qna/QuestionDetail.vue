@@ -91,3 +91,77 @@ export default {
 }
 </script>
 
+<style scoped>
+.content_table {
+  width: 98%;
+  border-bottom: 1px solid #EFEFEF;
+  border-right: 1px solid #EFEFEF;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  clear: both;
+}
+
+.content_table td,
+.content_table th {
+  text-align: center;
+  border-top: 1px solid #EFEFEF;
+  border-left: 1px solid #EFEFEF;
+  padding: 0.3em;
+}
+
+.content_table th {
+  background-color: rgb(129, 143, 175);
+  color: #FFFFFF;
+  line-height: 1.7em;
+  font-weight: normal;
+}
+
+.content_table td {
+  padding-left: 5px;
+  text-align: left;
+  line-height: 1.7em;
+}
+
+.content_table td.contents {
+  width: 100%;
+  height: 400px;
+  overflow: auto;
+}
+
+.content_table th,
+.content_table td {
+  vertical-align: middle;
+}
+
+.content_table select {
+  height: 19px;
+  border: #CCCCCC solid 1px;
+  vertical-align: middle;
+  line-height: 1.8em;
+  padding-left: 0px;
+}
+
+.content_table select option {
+  margin-right: 10px;
+}
+
+.search_box {
+  width: 98%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #EFEFEF;
+  background-color: #FFFFFF;
+  padding: 2px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  line-height: 2.1em;
+}
+</style>
