@@ -5,8 +5,10 @@ import store from './store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import Notifications from 'vue-notification'
 
 Vue.use(BootstrapVue)
+Vue.use(Notifications)
 Vue.config.productionTip = false
 
 new Vue({

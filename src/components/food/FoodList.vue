@@ -1,12 +1,29 @@
 <template>
     <div id="foodlist">
         
+        <notifications group="app" position="bottom right" class="myNotify"/>
         <ImageSlider></ImageSlider>
 
         <b-container class='bv-example-row fluid'>
             <b-row>
-                <b-col cols="8" align='left'>검색</b-col>
-                <b-col cols="4" align='right'>정렬</b-col>
+                <b-col cols="8" align='left'>
+                    <select v-model="searchType">
+                        <option value="name">이름</option>
+                        <option value="maker">제조사</option>
+                        <option value="materials">재료</option>
+                    </select>
+                    <input type="text" v-model="searchKeyword" placeholder="검색어를 입력하세요">
+                    <button @click="search">검색</button>          
+                </b-col>
+                <b-col cols="4" align='right'>
+                    정렬
+                    <select v-model="sortingType" @change="sorting($event)">
+                        <option disabled value="">선택하세요</option>
+                        <option value="name">이름순</option>
+                        <option value="maker">제조사순</option>
+                        <option value="">추천순</option>
+                    </select>
+                </b-col>
             </b-row>
         </b-container>
         
@@ -17,9 +34,8 @@
                      style="height: 150px; display: block; margin: 20px auto;" />
                 </div>
                 <div class="food-btns">
-                    <b-button pill variant="danger" size="sm" style="margin-right: 5px">추천</b-button>
-                    <b-button pill variant="warning" size="sm" @click="addTakenFood(food.foodId)">섭취</b-button>                  
-                </div>
+                    <b-button pill variant="danger" size="sm" style="margin-right: 5px" @click="onClickRecommend(food.foodId)">추천</b-button>
+                    <b-button pill variant="warning" size="sm" @click="addTakenFood(food.foodId)">섭취</b-button>                                  </div>
             </div>
             <div class="food-body">
                 <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
@@ -49,7 +65,11 @@ export default {
     },
     data() {
         return {
-            foods: []
+            foods: [],
+            sortingType: '',
+            searchType: '',
+            searchKeyword: '',
+            msg: '',
         }
     },
     mounted() {
@@ -57,12 +77,43 @@ export default {
     },
     methods: {
         selectAllFood() {
-            http.get("/foods")
-                .then(res => this.foods = res.data)
+            this.$store.dispatch('ALLFOOD')
+                        .then(() => this.foods = this.$store.getters.getFoods)
+            /* http.get("/foods")
+                .then(res => this.foods = res.data) */
         },
         addTakenFood(foodId) {
             http.post("/taken", {foodId})
-                .then(() => alert('섭취하였습니다!'))
+            this.$notify({
+                group: 'app',
+                type: 'warn',
+                duration: 1000,
+                title: '섭취완료',
+                text: '감사합니다'
+            })
+        },
+        search() {
+            http.get(`/foods?searchType=${this.searchType}&searchKeyword=${this.searchKeyword}`)
+                .then(res => this.foods = res.data)
+        },
+        sorting(event) {
+            const type = event.target.value            
+            if(type==='name') {
+                this.foods = this.$store.getters.getFoodsSortByName
+            } 
+            else if(type==='maker') {
+                this.foods = this.$store.getters.getFoodsSortByMaker
+            }
+        },
+        onClickRecommend(foodId) {
+            http.put(`/recommend/food/${foodId}`)
+            this.$notify({
+                group: 'app',
+                type: 'error',
+                duration: 1000,
+                title: '추천완료',
+                text: '감사합니다'
+            })
         }
     },
 }
@@ -87,6 +138,10 @@ export default {
 
 .food-wrapper>.food-body {
 	flex: 5 5 0;
+}
+
+.myNotify {
+    font-family: 'Jua';
 }
 
 </style>

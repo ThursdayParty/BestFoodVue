@@ -18,10 +18,43 @@ export default new Vuex.Store({
         foods: []
     },
     getters: {
-        isAuthenticated (state) {
+        isAuthenticated(state) {
             state.accessToken = state.accessToken || localStorage.accessToken
             return !!state.accessToken
-        }
+        },
+        getFoods(state) {
+            return state.foods
+        },
+        getFoodsSortByName(state) {
+            const foods = [...state.foods].sort((a, b) => {
+                if(a.name > b.name) return 1
+                if(a.name < b.name) return -1
+                return 0
+            })
+            return foods
+        },
+        getFoodsSortByMaker(state) {
+            const foods = [...state.foods].sort((a, b) => {
+                if(a.maker > b.maker) return 1
+                if(a.maker < b.maker) return -1
+                return 0
+            })
+            return foods
+        },
+        /* getFoodsSortByName(state) {
+            const list = state.foods
+            alert("name : " + JSON.stringify(state.foods))
+            return list.sort(function(a, b) {
+                return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            })
+        },
+        getFoodsSortByMaker(state) {
+            const list = state.foods
+            alert("maker : " + JSON.stringify(state.foods))
+            return list.sort(function(a, b) {
+                return a.maker < b.maker ? -1 : a.maker > b.maker ? 1 : 0;
+            })
+        }, */
     },
     mutations: {
         LOGIN(state, {access_token}) {
@@ -29,9 +62,12 @@ export default new Vuex.Store({
             localStorage.accessToken = access_token
             http.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
         },
-        LOGOUT (state) {
+        LOGOUT(state) {
             state.accessToken = null
             delete localStorage.accessToken
+        },
+        ALLFOOD(state, foods) {
+            state.foods = foods
         }
     },
     actions: {
@@ -42,19 +78,21 @@ export default new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://c2e69867.ngrok.io/oauth/token', params, {
+            return auth.post('http://82c4d32e.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
                             }
                         })
-                        .then(({data}) => {
-                            commit('LOGIN', data)
-                        })
+                        .then(({data}) => commit('LOGIN', data))
         },
         LOGOUT ({commit}) {
             http.defaults.headers.common['Authorization'] = undefined
             commit('LOGOUT')
         },
+        ALLFOOD ({commit}) {
+            return http.get('/foods')
+                        .then(({data}) => commit('ALLFOOD', data))
+        }
     }
 })
