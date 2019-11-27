@@ -16,7 +16,7 @@ export default new Vuex.Store({
     state: {
         accessToken: null,
         foods: [],
-        // userInfo: {}
+        userName: '',
     },
     getters: {
         isAuthenticated(state) {
@@ -42,6 +42,9 @@ export default new Vuex.Store({
             })
             return foods
         },
+        getUserName(state) {
+            return state.userName
+        }
         /* getFoodsSortByName(state) {
             const list = state.foods
             alert("name : " + JSON.stringify(state.foods))
@@ -69,6 +72,9 @@ export default new Vuex.Store({
         },
         ALLFOOD(state, foods) {
             state.foods = foods
+        },
+        USERNAME(state, name) {
+            state.userName = name
         }
     },
     actions: {
@@ -79,13 +85,17 @@ export default new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://0f5a5a5d.ngrok.io/oauth/token', params, {
+            return auth.post('http://68dcb0fc.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
                             }
                         })
                         .then(({data}) => commit('LOGIN', data))
+                        .then(() => {
+                            http.get('/account/currentUser')
+                                .then(({data}) => commit('USERNAME', data.name))
+                        })
         },
         LOGOUT ({commit}) {
             http.defaults.headers.common['Authorization'] = undefined

@@ -7,14 +7,6 @@
                     <td><input type="text" v-model="question.title"></td>
                 </tr>
                 <tr>
-                    <th>사용자아이디</th>
-                    <td><input type="text" v-model="question.userId"></td>
-                </tr>
-                <tr>
-                    <th>글비밀번호</th>
-                    <td><input type="text" v-model="question.boardPassword"></td>
-                </tr>
-                <tr>
                     <th>내용</th>
                     <td><input type="text" v-model="question.content"></td>
                 </tr>

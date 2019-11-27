@@ -7,11 +7,12 @@
         <b-container class='bv-example-row fluid'>
             <b-row>
                 <b-col cols="8" align='left'>
-                    <select v-model="searchType">
+                    <!-- <select v-model="searchType">
                         <option value="name">이름</option>
                         <option value="maker">제조사</option>
                         <option value="materials">재료</option>
-                    </select>
+                    </select> -->
+                    <b-form-select v-model="searchType" :options="options"></b-form-select>
                     <input type="text" v-model="searchKeyword" placeholder="검색어를 입력하세요">
                     <button @click="search">검색</button>          
                 </b-col>
@@ -86,6 +87,13 @@ export default {
             searchType: '',
             searchKeyword: '',
             msg: '',
+            options: [
+                { value: null, text: 'Please select some item' },
+                { value: 'a', text: 'This is First option' },
+                { value: 'b', text: 'Default Selected Option' },
+                { value: 'c', text: 'This is another option' },
+                { value: 'd', text: 'This one is disabled', disabled: true }
+            ]
         }
     },
     mounted() {

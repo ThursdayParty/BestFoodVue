@@ -33,7 +33,8 @@ const routes = [
   {
     path: '/questionwrite',
     name: 'questionwrite',
-    component: QuestionWrite
+    component: QuestionWrite,
+    beforeEnter: requireAuth()
   },
   {
     path: '/questiondetail/:boardId',

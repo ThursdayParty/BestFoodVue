@@ -6,7 +6,7 @@
                 <b-col cols="4" align='right'>
                     <!-- 로그인 후 -->
                     <div v-if="isAuthenticated">
-                        {{userId}}님 |
+                        {{userName}}님 |
                         <a href="" @click.prevent="onClickLogout">로그아웃</a> | 
                         <router-link to='/updateUserInfo'>회원정보수정</router-link>
                     </div>
@@ -22,27 +22,23 @@
 </template>
 
 <script>
-// import http from "../http-common";
-import store from '../store'
 export default {
     name: "header",
     data() {
         return {
-            userId: ""
         }
     },
-    // created() {
-    //     http.get('/home')
-    //         .then(result => this.userId = result.data.userId)
-    // },
     computed: {
       isAuthenticated() {
-        return store.getters.isAuthenticated
-      }
+        return this.$store.getters.isAuthenticated
+      },
+      userName() {
+        return this.$store.getters.getUserName
+      } 
     },
     methods: {
       onClickLogout() {
-        store.dispatch('LOGOUT')
+        this.$store.dispatch('LOGOUT')
             .then(() => this.$router.push('/'))
       }
     }
