@@ -15,19 +15,11 @@
                     <img :src="food.imageUrl" width='200' class="center">
                     <div class="overlay-top">
                         <div class="text">
-                            <h3>
+                            <h5 style="font-family: 'Jua'">
                                 <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
                                     {{food.name}}
                                 </router-link>
-                            </h3>
-                            <p class="small">{{food.name}}</p>
-                        </div>
-                    </div>
-                    <div class="overlay-bottom">
-                        <div class="links">
-                            <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
-                                상품 정보로 이동<i class="pl-10 fa fa-arrow-right"></i>
-                            </router-link>
+                            </h5>
                         </div>
                     </div>
                 </div>

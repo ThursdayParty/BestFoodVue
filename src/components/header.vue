@@ -2,7 +2,7 @@
     <div id="header">
         <b-container class='bv-example-row fluid'>
             <b-row>
-                <b-col cols="8" align='left'><h1 style="color: #ED5B46">SAFEFOOD</h1></b-col>
+                <b-col cols="8" align='left'><h1 style="color: #ED5B46">BESTFOOD</h1></b-col>
                 <b-col cols="4" align='right'>
                     <!-- 로그인 후 -->
                     <div v-if="isAuthenticated">

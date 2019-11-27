@@ -15,7 +15,8 @@ enhanceAccessToken()
 export default new Vuex.Store({
     state: {
         accessToken: null,
-        foods: []
+        foods: [],
+        // userInfo: {}
     },
     getters: {
         isAuthenticated(state) {
@@ -78,7 +79,7 @@ export default new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://82c4d32e.ngrok.io/oauth/token', params, {
+            return auth.post('http://0f5a5a5d.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'

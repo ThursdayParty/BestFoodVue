@@ -1,36 +1,33 @@
 <template>
   <div id='login'>
+    <b-card class='logincard' bg-variant="light">
+      <form @submit.prevent="onSubmit(email, password)">
+          <b-form-group
+            label-cols-sm="3"
+            label="Id :"
+            label-size="sm"
+            label-align-sm="right"
+            label-for="nested-id"
+          >
+            <b-form-input id="nested-id" size="sm" v-model="email" ></b-form-input>
+          </b-form-group>
 
-  <b-card class='logincard' bg-variant="light">
-    <form @submit.prevent="onSubmit(email, password)">
-        <b-form-group
-          label-cols-sm="3"
-          label="Id :"
-          label-size="sm"
-          label-align-sm="right"
-          label-for="nested-id"
-        >
-          <b-form-input id="nested-id" size="sm" v-model="email" ></b-form-input>
-        </b-form-group>
+          <b-form-group
+            label-cols-sm="3"
+            label="Password :"
+            label-size="sm"
+            label-align-sm="right"
+            label-for="nested-password"
+          >
+            <b-form-input type='password' id="nested-password" size="sm" v-model="password"></b-form-input>
+          </b-form-group>
 
-        <b-form-group
-          label-cols-sm="3"
-          label="Password :"
-          label-size="sm"
-          label-align-sm="right"
-          label-for="nested-password"
-        >
-          <b-form-input type='password' id="nested-password" size="sm" v-model="password"></b-form-input>
-        </b-form-group>
-
-        <b-button type="submit" pill variant="info">로그인</b-button>
-    </form>
-  </b-card>
-
-    <p><i>{{msg}}</i></p>
-
-
-
+          <b-button type="submit" variant="info" style="margin-right: 8px;">로그인</b-button>
+          <b-button variant="outline-info" @click="goSignup">회원가입</b-button>
+      </form>
+    </b-card>  
+    <br>
+    <div class="msgbox"><i>{{msg}}</i></div>
   </div>
 </template>
 
@@ -47,7 +44,9 @@
       onSubmit(email, password) {
         this.$store.dispatch('LOGIN', {email, password})
           .then(() => this.redirect())
-          .catch(({message}) => this.msg = message)
+          .catch(() => {
+            this.msg = '아이디 또는 비밀번호가 틀립니다.'            
+          })
       },
       redirect() {
         const {search} = window.location
@@ -63,6 +62,9 @@
         }, {})
 
         this.$router.push(returnPath)
+      },
+      goSignup() {
+        this.$router.push('/signup')
       }
     }
   }
@@ -72,10 +74,16 @@
 #login {
   width: 100%;
   text-align: center;
-  padding: 20px
+  padding: 120px 20px 120px;
+  font-family: 'Jua'
 }
+
 .logincard {
   display: inline-block;
   width: 50%;
+}
+
+.msgbox {
+  margin: 10px;
 }
 </style>

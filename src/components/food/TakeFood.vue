@@ -11,12 +11,14 @@
                     <th>섭취식품</th>
                     <th>제조사</th>
                     <th>칼로리</th>
+                    <th>알러지</th>
                 </tr>
                 <tr v-for="food in selected" :key="food.takenDateTime">
                     <td>{{food.takenDateTime | dateFormat}}</td>
                     <td>{{food.name}}</td>
                     <td>{{food.maker}}</td>
                     <td>{{food.kcal}}</td>
+                    <td>{{food.allergiesWithUser}}</td>
                 </tr>
             </table>
         </div>

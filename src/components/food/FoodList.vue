@@ -1,7 +1,7 @@
 <template>
     <div id="foodlist">
         
-        <notifications group="app" position="bottom right" class="myNotify"/>
+        <notifications group="app" position="bottom center" class="myNotify"/>
         <ImageSlider></ImageSlider>
 
         <b-container class='bv-example-row fluid'>
@@ -28,6 +28,22 @@
         </b-container>
         
         <div class="food-wrapper" v-for="food in foods" :key="food.foodId">
+           <!--  <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+                <b-row no-gutters>
+                    <b-col md="6">
+                        <b-card-img src="https://picsum.photos/400/400/?image=20" class="rounded-0"></b-card-img>
+                    </b-col>
+                    <b-col md="6">
+                        <b-card-body title="Horizontal Card">
+                        <b-card-text>
+                            This is a wider card with supporting text as a natural lead-in to additional content.
+                            This content is a little bit longer.
+                        </b-card-text>
+                        </b-card-body>
+                    </b-col>
+                </b-row>
+            </b-card> -->
+
             <div class="food-header">
                 <div class="food-img">
                     <img :src="food.imageUrl"
@@ -79,8 +95,6 @@ export default {
         selectAllFood() {
             this.$store.dispatch('ALLFOOD')
                         .then(() => this.foods = this.$store.getters.getFoods)
-            /* http.get("/foods")
-                .then(res => this.foods = res.data) */
         },
         addTakenFood(foodId) {
             http.post("/taken", {foodId})
@@ -88,8 +102,7 @@ export default {
                 group: 'app',
                 type: 'warn',
                 duration: 1000,
-                title: '섭취완료',
-                text: '감사합니다'
+                title: '섭 취 완 료',
             })
         },
         search() {
@@ -111,8 +124,7 @@ export default {
                 group: 'app',
                 type: 'error',
                 duration: 1000,
-                title: '추천완료',
-                text: '감사합니다'
+                title: '추 천 완 료',
             })
         }
     },
