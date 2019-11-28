@@ -23,7 +23,8 @@
           </b-form-group>
 
           <b-button type="submit" variant="info" style="margin-right: 8px;">로그인</b-button>
-          <b-button variant="outline-info" @click="goSignup">회원가입</b-button>
+          <b-button variant="outline-info" @click="goSignup">회원가입</b-button><br>
+          <b-button variant="outline-dark" @click="goGmailLogin" style="margin-top: 3px; width: 150px;">gmail로 로그인</b-button>
       </form>
     </b-card>  
     <br>
@@ -32,42 +33,55 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: '',
-        password: '',
-        msg: ''
-      }
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      msg: ''
+    }
+  },
+  methods: {
+    onSubmit(email, password) {
+      this.$store.dispatch('LOGIN', {email, password})
+        .then(() => this.redirect())
+        .catch(() => {
+          this.msg = '아이디 또는 비밀번호가 틀립니다.'            
+        })
     },
-    methods: {
-      onSubmit(email, password) {
-        this.$store.dispatch('LOGIN', {email, password})
-          .then(() => this.redirect())
-          .catch(() => {
-            this.msg = '아이디 또는 비밀번호가 틀립니다.'            
-          })
-      },
-      redirect() {
-        const {search} = window.location
-        if(search===''){
-              this.$router.push('/')
-        }
-
-        const tokens = search.replace(/^\?/, '').split('&')
-        const {returnPath} = tokens.reduce((qs, tkn) => {
-          const pair = tkn.split('=')
-          qs[pair[0]] = decodeURIComponent(pair[1])
-          return qs
-        }, {})
-
-        this.$router.push(returnPath)
-      },
-      goSignup() {
-        this.$router.push('/signup')
+    redirect() {
+      const {search} = window.location
+      if(search===''){
+            this.$router.push('/')
       }
+
+      const tokens = search.replace(/^\?/, '').split('&')
+      const {returnPath} = tokens.reduce((qs, tkn) => {
+        const pair = tkn.split('=')
+        qs[pair[0]] = decodeURIComponent(pair[1])
+        return qs
+      }, {})
+
+      this.$router.push(returnPath)
+    },
+    goSignup() {
+      this.$router.push('/signup')
+    },
+    goGmailLogin() {
+      this.$gAuth.signIn()
+          .then(GoogleUser => {
+            let requestDto = {
+              id: GoogleUser.El,
+              socialType: GoogleUser.Zi.idpId,
+              email: GoogleUser.w3.U3,
+              name: GoogleUser.w3.ig
+            }
+            this.$store.dispatch('SOCIAL_LOGIN', requestDto)
+                      .then(() => this.redirect())
+          })  
     }
   }
+}
 </script>
 
 <style scoped>

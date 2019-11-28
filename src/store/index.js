@@ -69,12 +69,14 @@ export default new Vuex.Store({
         LOGOUT(state) {
             state.accessToken = null
             delete localStorage.accessToken
+            delete localStorage.userName            
         },
         ALLFOOD(state, foods) {
             state.foods = foods
         },
         USERNAME(state, name) {
             state.userName = name
+            localStorage.userName = name
         }
     },
     actions: {
@@ -85,7 +87,7 @@ export default new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://68dcb0fc.ngrok.io/oauth/token', params, {
+            return auth.post('http://b59caac0.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
@@ -104,6 +106,17 @@ export default new Vuex.Store({
         ALLFOOD ({commit}) {
             return http.get('/foods')
                         .then(({data}) => commit('ALLFOOD', data))
-        }
+        },
+        SOCIAL_LOGIN ({commit}, requestDto) {
+           
+            return auth.post('http://b59caac0.ngrok.io/auth/google', requestDto, {
+                            headers: {'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'}
+                        })
+                        .then(({data}) => commit('LOGIN', data))
+                        .then(() => {
+                            http.get('/account/currentUser')
+                                .then(({data}) => commit('USERNAME', data.name))
+                        })
+        },
     }
 })

@@ -5,20 +5,28 @@
         </div>
 
         <div class="take_list">
+            <div id="currentDate">{{localDateTitle}}</div>
             <table class="list_table">
                 <tr>
-                    <th>섭취날짜</th>
+                    <th style="width:22%">섭취날짜</th>
                     <th>섭취식품</th>
                     <th>제조사</th>
                     <th>칼로리</th>
-                    <th>알러지</th>
+                    <th>삭제</th>
                 </tr>
                 <tr v-for="food in selected" :key="food.takenDateTime">
                     <td>{{food.takenDateTime | dateFormat}}</td>
-                    <td>{{food.name}}</td>
+                    <td>
+                        {{food.name}}
+                        <span v-for="a in food.allergiesWithUser" :key="a">
+                            <b-badge variant="danger" style="margin-right: 2px">{{a}}</b-badge>
+                        </span>                        
+                    </td>
                     <td>{{food.maker}}</td>
                     <td>{{food.kcal}}</td>
-                    <td>{{food.allergiesWithUser}}</td>
+                    <td>
+                        <b-button pill variant="warning" size="sm" @click="deleteTakenFood(food.takenFoodId)">삭제</b-button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -58,6 +66,7 @@ export default {
                 maintainAspectRatio: false, 
                 onClick: this.chartClick,
             },
+            localDateTitle: '',
         }
     },
     beforeMount() {
@@ -70,6 +79,7 @@ export default {
                 .then(() => {
                     this.fillData()
                     this.selected = this.takenFood[9].foods
+                    this.localDateTitle = this.takenFood[9].localDate
                 })
         },
         fillData () {
@@ -91,15 +101,24 @@ export default {
         chartClick(point, event) {
             const idx = event[0]._index
             this.selected = this.takenFood[idx].foods
+            this.localDateTitle = this.takenFood[idx].localDate
         },
+        deleteTakenFood(id) {
+            if(confirm("삭제하시겠습니까?")){
+                http.delete(`/taken/${id}`)
+                    .then(() => this.selectTakenAllFood())
+            }
+        }
     },
     filters: {
-        dateFormat: function(date) {
-            if(date === undefined) {
-                return ""
-            }
+        dateFormat: function(date) {            
+            // 2019-11-26T09:38:35.43937
             var dateStr = date+" "
-            return dateStr.substr(0,10);
+            const dateArr = dateStr.split('T')
+            return dateStr.substr(0,10).concat(' '+dateArr[1].substr(0, 8));
+        },
+        allergyFormat: function(arr) {
+            return arr.join(" ");
         }
     }
 }
@@ -114,4 +133,9 @@ export default {
     padding: 30px
 }
 
+#currentDate {
+    text-align: left;
+    padding-left: 10px;
+    font-family: 'Jua';
+}
 </style>
