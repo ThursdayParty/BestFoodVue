@@ -32,7 +32,7 @@
             </tr>
         </table>
 
-        <div class="qna_btns" v-if="isWritedUser">            
+        <div class="qna_btns" v-if="question.updatable">
             <b-button v-if="!updatable" variant="outline-secondary" size="sm" style="margin-right: 8px" @click="updatable=true">수정</b-button>  
             <div v-else>
                 <b-button variant="outline-secondary" size="sm" style="margin-right: 8px" @click="updateBoard">수정</b-button>  

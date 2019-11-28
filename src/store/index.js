@@ -7,12 +7,13 @@ Vue.use(Vuex)
 
 const enhanceAccessToken = () => {
     const {accessToken} = localStorage
+    vuex.commit('USERNAME', localStorage.userName)
+
     if (!accessToken) return
     http.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 }
-enhanceAccessToken()
 
-export default new Vuex.Store({
+const vuex = new Vuex.Store({
     state: {
         accessToken: null,
         foods: [],
@@ -128,3 +129,7 @@ export default new Vuex.Store({
         },
     }
 })
+
+enhanceAccessToken()
+
+export default vuex; 
