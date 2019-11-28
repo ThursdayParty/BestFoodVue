@@ -3,18 +3,13 @@
         <table class="content_table">
             <tr>
                 <th>제목</th>
-                <td colspan="3" v-if="updatable">
+                <td v-if="updatable">
                     <b-form-input v-model="updateQuestion.title"></b-form-input>
                 </td>
-                <td colspan="3" v-else>{{question.title}}</td>
-            </tr>
-            <tr>
+                <td v-else style="width:30%;">{{question.title}}</td>
+            
                 <th>조회수</th>
                 <td>{{question.views}}</td>
-
-                <th>댓글수</th>
-                <!-- <td>{{question.views}}</td> -->
-                <td>??</td>
             </tr>
             <tr>
                 <th>글쓴이</th>
@@ -40,7 +35,7 @@
             </div>
         </div>
 
-        <div class="qna_answers">
+        <!-- <div class="qna_answers">
             <div class="qna_ans_write">
                 댓글쓰기
             </div>
@@ -50,7 +45,7 @@
             </div>
         </div>
 
-        {{msg}}
+        {{msg}} -->
     </div>
 </template>
 
@@ -89,15 +84,16 @@ export default {
         },
         updateBoard() {
             http.put(`/qnaBoards/${this.boardId}`, this.updateQuestion)
-            this.$router.push("/qnaboard")
+                .then(() => this.$router.push("/qnaboard"))
         },
         deleteBoard() {
             http.delete(`/qnaBoards/${this.boardId}`)
-            this.$router.push("/qnaboard")
+                .then(() => this.$router.push("/qnaboard"))
         },
     },
     filters: {
         dateFormat: function(date) {
+            if(date===undefined) return ''
             var dateStr = date+" "
             return dateStr.substr(0,10);
         }

@@ -19,7 +19,7 @@
                 </b-col>
             </b-row>
         </b-container>
-
+        
         <div class="food-wrapper" v-for="food in foods" :key="food.foodId">
             <div class="food-header">
                 <div class="food-img">
@@ -28,7 +28,10 @@
                 </div>
                 <div class="food-btns">
                     <b-button pill variant="danger" size="sm" style="margin-right: 5px" @click="onClickRecommend(food.foodId)">추천</b-button>
-                    <b-button pill variant="warning" size="sm" @click="addTakenFood(food.foodId)">섭취</b-button>                                  </div>
+                    <!-- <span v-if="isAuthenticated"> -->
+                        <b-button pill variant="warning" size="sm" @click="addTakenFood(food.foodId)">섭취</b-button>                                  
+                    <!-- </span> -->
+                </div>
             </div>
             <div class="food-body">
                 <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
@@ -80,18 +83,34 @@ export default {
     mounted() {
         this.selectAllFood()
     },
+    computed: {
+        isAuthenticated() {
+            return this.$store.getters.isAuthenticated
+        }, 
+        /* evenNumbers: function () {
+            return this.numbers.filter(function (number) {
+                return number % 2 === 0
+            })
+        } */
+    },
     methods: {
         selectAllFood() {
             this.$store.dispatch('ALLFOOD')
                         .then(() => this.foods = this.$store.getters.getFoods)
         },
         addTakenFood(foodId) {
-            http.post("/taken", {foodId})
+            var type = "default"
+            var msg = "로그인을 해야합니다."
+            if(this.isAuthenticated) {
+                http.post("/taken", {foodId})
+                type = 'warn'
+                msg = '섭 취 완 료'
+            }
             this.$notify({
                 group: 'app',
-                type: 'warn',
+                type: type,
                 duration: 1000,
-                title: '섭 취 완 료',
+                title: msg,
             })
         },
         search() {
@@ -124,7 +143,7 @@ export default {
                 duration: 1000,
                 title: '추 천 완 료',
             })
-        }
+        },
     },
     watch: {
         sortingType(type) {

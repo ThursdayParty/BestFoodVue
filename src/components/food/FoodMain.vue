@@ -8,11 +8,13 @@
         <div class="recommand_ranking">
             <b-card-group deck>
                 <b-card v-for="(val, idx) in top5" :key="idx" 
-                    border-variant="success" 
+                    border-variant="default"
+                    style="padding: 16px;" 
                     align="center" 
                     :img-src="val.imageUrl" >
-                    <b-card-text>
-                        <b-badge variant="success" style="margin-right: 2px">{{idx+1}}등</b-badge>
+                    <b-card-text>                        
+                        <b-badge v-if="idx==0" variant="warning" style="margin-right: 2px">{{idx+1}}등</b-badge>
+                        <b-badge v-else variant="light" style="margin-right: 2px">{{idx+1}}등</b-badge>
                         <router-link :to="{name: 'fooddetail', params: {code: val.foodId}}" style="font-family: 'Jua'">
                             {{val.name}}
                         </router-link>

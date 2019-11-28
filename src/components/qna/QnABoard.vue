@@ -5,22 +5,20 @@
         </div>
         <table class="list_table">
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>댓글수</th>
-                <th>조회수</th>
+                <th style="width:5%;">번호</th>
+                <th style="width:60%;">제목</th>
+                <th style="width:10%;">작성자</th>
+                <th style="width:10%;">작성일</th>
+                <th style="width:10%;">조회수</th>
             </tr>
 
             <tr v-for="q in questions" :key="q.boardId">
                 <td>{{q.boardId}}</td>
-                <td style="width: 60%">
+                <td>
                     <router-link :to="{name: 'questiondetail', params: {boardId: q.boardId}}">{{q.title}}</router-link>
                 </td>
-                <td>{{q.userId}}</td>
+                <td>{{q.userName}}</td>
                 <td>{{q.createdTime | dateFormat}}</td>
-                <td>0</td>
                 <td>{{q.views}}</td>
             </tr>
         </table>

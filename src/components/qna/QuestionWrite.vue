@@ -35,7 +35,7 @@ export default {
     methods: {
         submit() {
             http.post("/qnaBoards", this.question)
-            this.$router.push("/qnaboard")
+                .then(() => this.$router.push("/qnaboard"))
         }
     },
 }

@@ -96,7 +96,7 @@ const vuex = new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://09b82e1d.ngrok.io/oauth/token', params, {
+            return auth.post('http://15024c07.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
@@ -118,7 +118,7 @@ const vuex = new Vuex.Store({
         },
         SOCIAL_LOGIN ({commit}, requestDto) {
            
-            return auth.post('http://09b82e1d.ngrok.io/auth/google', requestDto, {
+            return auth.post('http://15024c07.ngrok.io/auth/google', requestDto, {
                             headers: {'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'}
                         })
                         .then(({data}) => commit('LOGIN', data))

@@ -8,16 +8,23 @@
             <div id="currentDate">{{localDateTitle}}</div>
             <table class="list_table">
                 <tr>
-                    <th style="width:22%">섭취날짜</th>
-                    <th>섭취식품</th>
+                    <th style="width:22%">섭취 시간</th>
+                    <th>섭취 식품</th>
                     <th>제조사</th>
                     <th>칼로리</th>
                     <th>삭제</th>
                 </tr>
                 <tr v-for="food in selected" :key="food.takenDateTime">
-                    <td>{{food.takenDateTime | dateFormat}}</td>
                     <td>
-                        {{food.name}}
+                        <b-badge variant="info" style="margin-right: 2px">
+                        {{food.takenDateTime | timeBadge}}
+                        </b-badge>
+                        {{food.takenDateTime | timeFormat}}
+                    </td>
+                    <td>
+                        <router-link :to="{name: 'fooddetail', params: {code: food.foodId}}">
+                            {{food.name}}
+                        </router-link>
                         <span v-for="a in food.allergiesWithUser" :key="a">
                             <b-badge variant="danger" style="margin-right: 2px">{{a}}</b-badge>
                         </span>                        
@@ -25,7 +32,7 @@
                     <td>{{food.maker}}</td>
                     <td>{{food.kcal}}</td>
                     <td>
-                        <b-button pill variant="warning" size="sm" @click="deleteTakenFood(food.takenFoodId)">삭제</b-button>
+                        <b-button variant="warning" size="sm" @click="deleteTakenFood(food.takenFoodId)">삭제</b-button>
                     </td>
                 </tr>
             </table>
@@ -111,11 +118,24 @@ export default {
         }
     },
     filters: {
-        dateFormat: function(date) {            
+        timeBadge: function(date) {    
+            return date.split('T')[1].substr(0,2) < 12 ? '오전' : '오후'
+        },
+        timeFormat: function(date) {    
             // 2019-11-26T09:38:35.43937
+
             var dateStr = date+" "
             const dateArr = dateStr.split('T')
-            return dateStr.substr(0,10).concat(' '+dateArr[1].substr(0, 8));
+            const timeArr = dateArr[1].substr(0, 8).split(':')
+
+//            const hour = timeArr[0] < 12 ? `오전 ${timeArr[0]}시` : `오후 ${timeArr[0]%12}시 `
+            const hour = `${timeArr[0] % 12}시`
+            const minute = `${timeArr[1]}분 `
+            const second = `${timeArr[2]}초`
+
+            const result = hour + minute + second
+
+            return result;
         },
         allergyFormat: function(arr) {
             return arr.join(" ");
@@ -136,6 +156,8 @@ export default {
 #currentDate {
     text-align: left;
     padding-left: 10px;
+    padding-bottom: 10px;
     font-family: 'Jua';
+    font-size: 1.5em;
 }
 </style>
