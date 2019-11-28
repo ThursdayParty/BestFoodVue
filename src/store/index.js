@@ -42,6 +42,14 @@ export default new Vuex.Store({
             })
             return foods
         },
+        getFoodsSortByRecommend(state) {
+            const foods = [...state.foods].sort((a, b) => {
+                if(a.recommendCount > b.recommendCount) return -1
+                if(a.recommendCount < b.recommendCount) return 1
+                return 0
+            })
+            return foods
+        },
         getUserName(state) {
             return state.userName
         }
@@ -87,7 +95,7 @@ export default new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://b59caac0.ngrok.io/oauth/token', params, {
+            return auth.post('http://09b82e1d.ngrok.io/oauth/token', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
@@ -109,7 +117,7 @@ export default new Vuex.Store({
         },
         SOCIAL_LOGIN ({commit}, requestDto) {
            
-            return auth.post('http://b59caac0.ngrok.io/auth/google', requestDto, {
+            return auth.post('http://09b82e1d.ngrok.io/auth/google', requestDto, {
                             headers: {'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'}
                         })
                         .then(({data}) => commit('LOGIN', data))

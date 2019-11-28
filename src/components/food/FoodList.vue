@@ -10,7 +10,7 @@
                     <b-form-select v-model="searchType" :options="searchOptions" size="sm" style="width: 17%;">
                     </b-form-select>
                     <!-- <b-form-input v-model="searchKeyword" placeholder="검색어를 입력하세요"></b-form-input> -->
-                    <input type="text" v-model="searchKeyword" placeholder="검색어를 입력하세요">
+                    <input type="text" v-model="searchKeyword" placeholder="검색어를 입력하세요" id="searchInput" @keyup.enter="search">
                     <b-button size="sm" variant="outline-secondary" @click="search">검색</b-button>          
                 </b-col>
                 <b-col cols="4" align='right'>
@@ -71,7 +71,7 @@ export default {
             ],
             sortingOptions: [
                 { value: '', text: '정렬' },
-                { value: '', text: '추천순' },
+                { value: 'recommend', text: '추천순' },
                 { value: 'name', text: '이름순' },
                 { value: 'maker', text: '제조사순' },
             ],
@@ -134,6 +134,9 @@ export default {
             else if(type==='maker') {
                 this.foods = this.$store.getters.getFoodsSortByMaker
             }
+            else if(type==='recommend') {
+                this.foods = this.$store.getters.getFoodsSortByRecommend
+            }
         }
     },  
 }
@@ -166,6 +169,11 @@ export default {
 
 .bv-example-row {
     padding: 16px;
+}
+
+#searchInput {
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 </style>
