@@ -6,8 +6,8 @@ import auth from 'axios'
 Vue.use(Vuex)
 
 const enhanceAccessToken = () => {
-    const {accessToken} = localStorage
-    vuex.commit('USERNAME', localStorage.userName)
+    const {accessToken, userName, isSocialUser} = localStorage
+    vuex.commit('TO_LOCALSTORAGE', {name:userName, isSocialUser})
 
     if (!accessToken) return
     http.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -18,6 +18,7 @@ const vuex = new Vuex.Store({
         accessToken: null,
         foods: [],
         userName: '',
+        isSocialUser: Boolean
     },
     getters: {
         isAuthenticated(state) {
@@ -78,14 +79,17 @@ const vuex = new Vuex.Store({
         LOGOUT(state) {
             state.accessToken = null
             delete localStorage.accessToken
-            delete localStorage.userName            
+            delete localStorage.userName
+            delete localStorage.isSocialUser
         },
         ALLFOOD(state, foods) {
             state.foods = foods
         },
-        USERNAME(state, name) {
+        TO_LOCALSTORAGE(state, {name, isSocialUser}) {
             state.userName = name
+            state.isSocialUser = isSocialUser
             localStorage.userName = name
+            localStorage.isSocialUser = isSocialUser
         }
     },
     actions: {
@@ -105,7 +109,7 @@ const vuex = new Vuex.Store({
                         .then(({data}) => commit('LOGIN', data))
                         .then(() => {
                             http.get('/account/currentUser')
-                                .then(({data}) => commit('USERNAME', data.name))
+                                .then(({data}) => commit('TO_LOCALSTORAGE', data))
                         })
         },
         LOGOUT ({commit}) {
@@ -124,7 +128,7 @@ const vuex = new Vuex.Store({
                         .then(({data}) => commit('LOGIN', data))
                         .then(() => {
                             http.get('/account/currentUser')
-                                .then(({data}) => commit('USERNAME', data.name))
+                                .then(({data}) => commit('TO_LOCALSTORAGE', data))
                         })
         },
     }

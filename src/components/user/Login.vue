@@ -24,7 +24,9 @@
 
           <b-button type="submit" variant="info" style="margin-right: 8px;">로그인</b-button>
           <b-button variant="outline-info" @click="goSignup">회원가입</b-button><br>
-          <b-button variant="outline-dark" @click="goGmailLogin" style="margin-top: 3px; width: 150px;">gmail로 로그인</b-button>
+          <b-button variant="outline-dark" @click="goGmailLogin" style="margin-top: 3px; width: 150px;">
+              <img :src="googleLogo" style="width:25%; padding-right:7%;">gmail로 로그인
+          </b-button>
       </form>
     </b-card>  
     <br>
@@ -38,7 +40,8 @@ export default {
     return {
       email: '',
       password: '',
-      msg: ''
+      msg: '',
+      googleLogo: require('../../assets/googleLogo.png')
     }
   },
   methods: {

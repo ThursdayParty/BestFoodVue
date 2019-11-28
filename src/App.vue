@@ -8,8 +8,8 @@
     <router-view/>
 
     <hr>
-    <Footer></Footer>    
-    
+    <Footer></Footer>
+
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
+  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #685F74;
   padding: 25px 120px;
