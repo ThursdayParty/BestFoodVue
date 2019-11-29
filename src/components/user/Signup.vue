@@ -108,10 +108,29 @@ export default {
                     group: 'app',
                     type: 'error',
                     duration: 1000,
-                    title: '중복체크',
+                    title: '중 복 체 크',
                     text: '중복체크를 해주세요.'
                 })
-            } else {
+            } 
+            else if(!this.passValidation) {
+                this.$notify({
+                    group: 'app',
+                    type: 'error',
+                    duration: 1000,
+                    title: '비 밀 번 호',
+                    text: '비밀번호는 4자리 이상 20자 이하입니다.'
+                })
+            }
+            else if(!this.passAgainValidation) {
+                this.$notify({
+                    group: 'app',
+                    type: 'error',
+                    duration: 1000,
+                    title: '비 밀 번 호',
+                    text: '비밀번호 확인에 동일하게 입력해주세요.'
+                })
+            }            
+            else {
                 http.post('/account/signup', this.userForm)
                     .then(() => alert("회원가입이 완료되었습니다."))
                     .then(() => this.$router.push("/login"))
@@ -149,7 +168,6 @@ export default {
                         this.didCheckDuplicationId = false
                     })
             }
-
         }
     },
 }
