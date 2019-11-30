@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import http from '../http-common'
-import auth from 'axios'
 
 Vue.use(Vuex)
 
@@ -100,7 +99,7 @@ const vuex = new Vuex.Store({
             params.append('username', email)
             params.append('password', password)
             
-            return auth.post('http://70.12.227.239:9090/oauth/token', params, {
+            return http.post('/login', params, {
                             headers: {
                                 'content-type' : 'application/x-www-form-urlencoded',
                                 'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'
@@ -122,7 +121,7 @@ const vuex = new Vuex.Store({
         },
         SOCIAL_LOGIN ({commit}, requestDto) {
            
-            return auth.post('http://70.12.227.239:9090/auth/google', requestDto, {
+            return http.post('/login/google', requestDto, {
                             headers: {'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'}
                         })
                         .then(({data}) => commit('LOGIN', data))
