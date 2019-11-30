@@ -120,8 +120,7 @@ const vuex = new Vuex.Store({
                         .then(({data}) => commit('ALLFOOD', data))
         },
         SOCIAL_LOGIN ({commit}, requestDto) {
-           
-            return http.post('/login/google', requestDto, {
+            return http.post('/social/login', requestDto, {
                             headers: {'Authorization': 'Basic YmFjdG9yaWE6cGFzc3dvcmQh'}
                         })
                         .then(({data}) => commit('LOGIN', data))
