@@ -16,6 +16,7 @@ const vuex = new Vuex.Store({
     state: {
         accessToken: null,
         foods: [],
+        food: {},
         userName: '',
         isSocialUser: Boolean
     },
@@ -84,6 +85,9 @@ const vuex = new Vuex.Store({
         ALLFOOD(state, foods) {
             state.foods = foods
         },
+        SAVE_FOOD(state, food) {
+            state.food = food
+        },
         TO_LOCALSTORAGE(state, {name, isSocialUser}) {
             state.userName = name
             state.isSocialUser = isSocialUser
@@ -118,6 +122,10 @@ const vuex = new Vuex.Store({
         ALLFOOD ({commit}) {
             return http.get('/foods')
                         .then(({data}) => commit('ALLFOOD', data))
+        },
+        FETCH_FOOD_DETAIL({commit}, code) {
+            return http.get(`/foods/${code}`)
+                .then(({data}) => commit('SAVE_FOOD', data))
         },
         SOCIAL_LOGIN ({commit}, requestDto) {
             return http.post('/social/login', requestDto, {

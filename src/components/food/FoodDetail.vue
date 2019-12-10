@@ -30,7 +30,7 @@
                                 </tr>
                                 <tr>
                                     <th>알러지 성분</th>                                    
-                                    <td v-if="$options.filters.allergyFormat(alergies)">{{alergies | allergyFormat}}</td>
+                                    <td v-if="$options.filters.allergyFormat(food.alergies)">{{food.alergies | allergyFormat}}</td>
                                     <td v-else>해당하는 알러지 성분이 없습니다.</td>
                                 </tr>
                                 <tr>
@@ -51,8 +51,9 @@
 </template>
 
 <script>
-import http from "../../http-common";
 import PieChart from './PieChart.js'
+import {mapActions, mapState} from 'vuex'
+
 export default {
     name: 'fooddetail',
     components: {
@@ -61,8 +62,6 @@ export default {
     data() {
         return {
             code: "",
-            food: {},
-            alergies: [],
             options: {responsive: true, maintainAspectRatio: false},
             datacollection: null
         }
@@ -71,13 +70,17 @@ export default {
         this.code = this.$route.params.code
         this.selectFoodBycode()
     },
+    computed: {
+        ...mapState([
+            'food'
+        ]),
+    },
     methods: {
+        ...mapActions([
+            'FETCH_FOOD_DETAIL'
+        ]),
         selectFoodBycode() {
-            http.get("/foods/" + this.code)
-                .then(res => {
-                    this.food = res.data
-                    this.alergies = res.data.alergies
-                })
+            this.FETCH_FOOD_DETAIL(this.code)
                 .then(() => this.fillData())
         },
         fillData () {
