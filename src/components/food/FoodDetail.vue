@@ -102,6 +102,9 @@ export default {
     },
     filters: {
         allergyFormat: function(arr) {
+            if (arr === undefined) {
+                return false
+            }
             return arr.join(" ");
         }
     },
