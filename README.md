@@ -1,4 +1,4 @@
-# safefood
+# bestfood
 
 ## Project setup
 ```
