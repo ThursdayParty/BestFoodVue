@@ -1,7 +1,7 @@
 <template>
     <div id="takefood">
         <div class="take_chart">
-            <line-chart :chart-data="datacollection" :options="options" ></line-chart>
+            <line-chart v-if="loaded" :chart-data="datacollection" :options="options" ></line-chart>
         </div>
 
         <div class="take_list">
@@ -50,8 +50,10 @@ export default {
     },
     data() {
         return {
+            loaded: false,
             selected: [],
             takenFood: [],
+            localDateTitle: '',
             datacollection: null,
             options: {
                 scales: {
@@ -73,34 +75,33 @@ export default {
                 maintainAspectRatio: false, 
                 onClick: this.chartClick,
             },
-            localDateTitle: '',
         }
     },
-    beforeMount() {
-        this.selectTakenAllFood()
+    async mounted() {
+        this.loaded = false
+        try {
+            const res = await http.get('/taken/daily')
+            this.takenFood = res.data
+            this.fillData()
+            this.selected = this.takenFood[9].foods
+            this.localDateTitle = this.takenFood[9].localDate
+            this.loaded = true
+        } catch(e) {
+            // alert('error : ' +  e)
+        }
     },
     methods: {
-        selectTakenAllFood() {
-            http.get('/taken/daily')
-                .then(res => this.takenFood = res.data)
-                .then(() => {
-                    this.fillData()
-                    this.selected = this.takenFood[9].foods
-                    this.localDateTitle = this.takenFood[9].localDate
-                })
-        },
         fillData () {
             this.datacollection = {
                 labels: this.takenFood.map(x => x.localDate),
                 datasets: [{
                     label: '총칼로리',
                     borderWidth: 1,
-                    fill: false,
+                    // fill: false,
                     backgroundColor: '',
                     pointBackgroundColor: '#84AC67',
                     borderColor: '#84AC67',
-                    pointBorderColor: '#84AC67',
-    
+                    pointBorderColor: '#84AC67',    
                     data: this.takenFood.map(x => x.kcal)
                 }],
             }
